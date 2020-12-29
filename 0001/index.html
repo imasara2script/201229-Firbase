@@ -1,0 +1,54 @@
+<html>
+<head>
+    <title>0001 コピペ</title>
+</head>
+<body>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyAT40NJDzlWiQamFD53WU0-LDHToh7TY2c",
+    authDomain: "st-86f2e.firebaseapp.com",
+    projectId: "st-86f2e",
+    storageBucket: "st-86f2e.appspot.com",
+    messagingSenderId: "423622629571",
+    appId: "1:423622629571:web:cbd7207b403f89fbc7ea76"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+
+参照した<a href="https://qiita.com/alingogo/items/100e6c62d849058e89f9">サイト</a><br>
+
+<div id='messagesDiv'></div>
+<input type='text' id='nameInput' placeholder='Name'>
+<input type='text' id='messageInput' placeholder='Message...'>
+<script type='text/javascript'>
+  var messagesRef = firebase.database().ref('/');
+
+  $('#messageInput').keypress(function (e) {
+    if (e.keyCode == 13) {
+      var name = $('#nameInput').val();
+      var text = $('#messageInput').val();
+      messagesRef.push({name:name, text:text});
+      $('#messageInput').val('');
+    }
+  });
+
+  messagesRef.on('child_added', function (snapshot) {
+    var message = snapshot.val();
+console.log(message.name);
+    if (message.name) {
+      $('<div/>').text(message.text).prepend($('<em/>').text(message.name+': ')).appendTo($('#messagesDiv'));
+      $('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
+    }
+  });
+</script>
+
+</body>
+</html>
