@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome to Firebase Hosting</title>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel" src="https://www.gstatic.com/firebasejs/8.2.8/firebase-app.js"></script>
+<script type="text/babel" src="https://www.gstatic.com/firebasejs/8.2.8/firebase-database.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyAT40NJDzlWiQamFD53WU0-LDHToh7TY2c",
+    authDomain: "st-86f2e.firebaseapp.com",
+    databaseURL: "https://st-86f2e-default-rtdb.firebaseio.com",
+    projectId: "st-86f2e",
+    storageBucket: "st-86f2e.appspot.com",
+    messagingSenderId: "423622629571",
+    appId: "1:423622629571:web:cbd7207b403f89fbc7ea76"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+	
+  </head>
+  <body>
+    <div id="message">
+      <h1>Firebaseてすと</h1>
+      <p>文字を入れると更新されます</p>
+      <ul>
+        <li id="chatText"></li>
+        <li><input type="text" name="" id="my_text"></li>
+        <li><a onclick="changeData()">更新</a></li>
+      </ul>
+    </div>
+
+
+    <script>
+      var db = firebase.database();
+      var myChatAll = db.ref("/my/chat/all");
+
+      function changeData(){
+        var text = document.getElementById("my_text").value;
+        myChatAll.set({title:"example", text:text});
+      }
+
+      myChatAll.on("value", function(snapshot) { 
+        document.getElementById("chatText").innerText = snapshot.val().text;
+      });
+    </script>
+  </body>
+</html>
